@@ -34,12 +34,16 @@ google_fonts: Access to a variety of Google fonts.
 
 font_awesome_flutter: Provides a vast collection of icons.
 
-<img src="sim1.png"  width="400" height="auto">
-![HomeScreen](sim1.png)
-![CompletedScreen](sim2.png)
-![AllEntriesScreen](sim3.png)
-![EntryViewScreen](sim4.png)
+## Screenshots
 
+<img src="sim1.png"  width="400" height="auto">
+<br>
+<img src="sim2.png"  width="400" height="auto">
+<br>
+<img src="sim3.png"  width="400" height="auto">
+<br>
+<img src="sim4.png"  width="400" height="auto">
+<br>
 To further understand the flow and intricacies of the application, delve into the provided code and navigate through its comments and structures.
 
 Happy Journaling! 📝📘
