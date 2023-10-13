@@ -142,8 +142,8 @@ Widget _weatherTemperature() {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: !_entryCompleted ? AppBar(
-      backgroundColor: Colors.grey.shade900,
-      title: Text('JOURNAL', style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.black,
+      title: Text('Journal', style: TextStyle(color: Colors.grey.shade900, fontFamily: 'Archivo', letterSpacing: 2.0)),
       actions: [
         IconButton(
           icon: Icon(FontAwesomeIcons.book),

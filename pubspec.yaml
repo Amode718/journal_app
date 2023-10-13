@@ -100,6 +100,9 @@ flutter:
     - family: Gabarito
       fonts:
         - asset: Fonts/Gabarito-VariableFont_wght.ttf
+    - family: Archivo
+      fonts:
+        - asset: Fonts/ArchivoNarrow-Regular.ttf
 
   #
   # For details regarding fonts from package dependencies,
