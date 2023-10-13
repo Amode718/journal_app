@@ -1,4 +1,4 @@
-# Journal App Readme
+# DiaryByte Readme
 
 ## Overview
 
