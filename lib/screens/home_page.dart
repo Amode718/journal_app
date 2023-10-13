@@ -179,8 +179,6 @@ Widget build(BuildContext context) {
   );
 }
 
-
-
   Widget _buildEntryScreen() {
   return Padding(
     padding: const EdgeInsets.all(16.0),
@@ -191,7 +189,7 @@ Widget build(BuildContext context) {
           Container(
             child: Column(
               children: [
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 Text(
                   "Today",
                   style: TextStyle(
