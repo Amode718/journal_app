@@ -34,10 +34,10 @@ google_fonts: Access to a variety of Google fonts.
 
 font_awesome_flutter: Provides a vast collection of icons.
 
-![HomeScreen](https://ibb.co/Jvt8dCY)
-![CompletedScreen](https://ibb.co/J7kdp5F)
-![AllEntriesScreen](https://ibb.co/j5Mc8pb)
-![EntryViewScreen](https://ibb.co/0VstKNL)
+![HomeScreen](sim1.png)
+![CompletedScreen](sim2.png)
+![AllEntriesScreen](sim3.png)
+![EntryViewScreen](sim4.png)
 
 To further understand the flow and intricacies of the application, delve into the provided code and navigate through its comments and structures.
 
