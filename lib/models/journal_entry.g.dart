@@ -54,27 +54,42 @@ class MoodAdapter extends TypeAdapter<Mood> {
   Mood read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return Mood.sad;
+        return Mood.Sad;
       case 1:
-        return Mood.neutral;
+        return Mood.Neutral;
       case 2:
-        return Mood.happy;
+        return Mood.Happy;
+      case 3:
+        return Mood.Excited;
+      case 4:
+        return Mood.Anxious;
+      case 5:
+        return Mood.Angry;
       default:
-        return Mood.sad;
+        return Mood.Sad;
     }
   }
 
   @override
   void write(BinaryWriter writer, Mood obj) {
     switch (obj) {
-      case Mood.sad:
+      case Mood.Sad:
         writer.writeByte(0);
         break;
-      case Mood.neutral:
+      case Mood.Neutral:
         writer.writeByte(1);
         break;
-      case Mood.happy:
+      case Mood.Happy:
         writer.writeByte(2);
+        break;
+      case Mood.Excited:
+        writer.writeByte(3);
+        break;
+      case Mood.Anxious:
+        writer.writeByte(4);
+        break;
+      case Mood.Angry:
+        writer.writeByte(5);
         break;
     }
   }

@@ -34,6 +34,11 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   intl: ^0.17.0
+  flutter_animate: ^4.2.0+1
+  weather: ^3.1.1
+  geolocator: ^10.1.0
+  google_fonts: ^6.1.0
+  font_awesome_flutter: ^10.5.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -79,16 +84,17 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: YoungSerif
+      fonts:
+        - asset: Fonts/YoungSerif-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: Fonts/Roboto-Regular.ttf
+    - family: Gabarito
+      fonts:
+        - asset: Fonts/Gabarito-VariableFont_wght.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

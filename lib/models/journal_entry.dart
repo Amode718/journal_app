@@ -19,9 +19,16 @@ class JournalEntry {
 @HiveType(typeId: 1)
 enum Mood {
   @HiveField(0)
-  sad,
+  Sad,
   @HiveField(1)
-  neutral,
+  Neutral,
   @HiveField(2)
-  happy
+  Happy,
+  @HiveField(3)
+  Excited,
+  @HiveField(4)
+  Anxious,
+  @HiveField(5)
+  Angry
 }
+
