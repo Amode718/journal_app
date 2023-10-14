@@ -40,25 +40,32 @@ class _AllEntriesPageState extends State<AllEntriesPage> {
     setState(() {});
   }
 
-  @override
+@override
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       title: Text('All Entries'),
       backgroundColor: Colors.grey.shade900,
       leading: IconButton(
-          icon: Icon(FontAwesomeIcons.arrowLeft, color: Colors.white), 
-          onPressed: () {
-            Navigator.pop(context, true); 
-          },
-        ),
+        icon: Icon(FontAwesomeIcons.arrowLeft, color: Colors.white), 
+        onPressed: () {
+          Navigator.pop(context, true); 
+        },
+      ),
     ),
     body: Container(
       color: Colors.grey.shade900,
-      child: ListView.separated(
-        itemCount: _box.length,
-        separatorBuilder: (context, index) => Divider(color: Colors.grey.shade800),
-        itemBuilder: (context, index) {
+      child: _box.isEmpty
+          ? Center(
+            child: Text(
+              'No entries yet... Please add some!',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+          : ListView.separated(
+              itemCount: _box.length,
+              separatorBuilder: (context, index) => Divider(color: Colors.grey.shade800),
+              itemBuilder: (context, index) {
           final entry = _box.getAt(index);
           return Dismissible(
             key: Key(entry!.date.toIso8601String()),

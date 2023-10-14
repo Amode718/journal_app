@@ -32,9 +32,9 @@ class _EntryEditPageState extends State<EntryEditPage> {
         title: Text('Edit Entry'),
         backgroundColor: Colors.grey.shade900,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.arrowLeft, color: Colors.white), 
+          icon: Icon(FontAwesomeIcons.arrowLeft, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); 
+            Navigator.pop(context);
           },
         ),
         actions: [
@@ -48,40 +48,45 @@ class _EntryEditPageState extends State<EntryEditPage> {
           ),
         ],
       ),
-      body: Container(
-        color: Colors.grey.shade900,
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded( // make the TextField take as much space as possible
-              child: TextField(
-                controller: _textController,
-                maxLines: null, // extField to expand vertically
-                expands: true,  // TextField occupies the full height
-                style: TextStyle(color: Colors.white, fontSize: 18), // Adjust the fontSize
-                decoration: InputDecoration(
-                  hintText: 'Edit your entry',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: InputBorder.none, // No visible border
-                  filled: false, // No fill
-                  isDense: true,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Unfocus any focused widget.
+        },
+        child: Container(
+          color: Colors.grey.shade900,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _textController,
+                  maxLines: null,
+                  expands: true,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  decoration: InputDecoration(
+                    hintText: 'Edit your entry',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
+                    filled: false,
+                    isDense: true,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround, 
-              children: [
-                _buildMoodIconButton(Mood.Happy, FontAwesomeIcons.smile),
-                _buildMoodIconButton(Mood.Neutral, FontAwesomeIcons.meh),
-                _buildMoodIconButton(Mood.Sad, FontAwesomeIcons.frown),
-                _buildMoodIconButton(Mood.Excited, FontAwesomeIcons.grinStars),
-                _buildMoodIconButton(Mood.Anxious, FontAwesomeIcons.sadTear),
-                _buildMoodIconButton(Mood.Angry, FontAwesomeIcons.angry),
-              ],
-            ),
-            SizedBox(height: 20), 
-          ],
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildMoodIconButton(Mood.Happy, FontAwesomeIcons.smile),
+                  _buildMoodIconButton(Mood.Neutral, FontAwesomeIcons.meh),
+                  _buildMoodIconButton(Mood.Sad, FontAwesomeIcons.frown),
+                  _buildMoodIconButton(Mood.Excited, FontAwesomeIcons.grinStars),
+                  _buildMoodIconButton(Mood.Anxious, FontAwesomeIcons.sadTear),
+                  _buildMoodIconButton(Mood.Angry, FontAwesomeIcons.angry),
+                ],
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
@@ -98,8 +103,7 @@ class _EntryEditPageState extends State<EntryEditPage> {
     );
   }
 
-
-   void _saveChanges() {
+  void _saveChanges() {
     final box = Hive.box<JournalEntry>('journalEntries');
     final updatedEntry = JournalEntry(widget.entry.date, _textController.text, _selectedMood!);
     box.putAt(widget.entryIndex, updatedEntry);
@@ -108,36 +112,36 @@ class _EntryEditPageState extends State<EntryEditPage> {
   }
 
   void _deleteEntry() async {
-  final confirmDelete = await showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this entry?'),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop(false);  // Dismiss dialog and return false
-            },
-          ),
-          ElevatedButton(
-            child: Text('Delete'),
-            onPressed: () {
-              Navigator.of(context).pop(true);  // Dismiss dialog and return true
-            },
-          ),
-        ],
-      );
-    },
-  );
+    final confirmDelete = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete this entry?'),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false);  // Dismiss dialog and return false
+              },
+            ),
+            ElevatedButton(
+              child: Text('Delete'),
+              onPressed: () {
+                Navigator.of(context).pop(true);  // Dismiss dialog and return true
+              },
+            ),
+          ],
+        );
+      },
+    );
 
-  if (confirmDelete == true) {
-    final box = Hive.box<JournalEntry>('journalEntries');
-    box.deleteAt(widget.entryIndex);
-    Navigator.pop(context);  // Return to the AllEntriesPage after deleting
+    if (confirmDelete == true) {
+      final box = Hive.box<JournalEntry>('journalEntries');
+      box.deleteAt(widget.entryIndex);
+      Navigator.pop(context);  // Return to the AllEntriesPage after deleting
+    }
   }
-}
 
   @override
   void dispose() {
