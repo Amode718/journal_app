@@ -160,24 +160,30 @@ Widget build(BuildContext context) {
         )
       ],
     ) : null,
-    body: Stack(
-      children: [
-        // Gradient Background
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.black, customDarkGrey],  
-              stops: [0.3, 0.3], 
+    body: GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus(); // This line dismisses the keyboard
+      },
+      child: Stack(
+        children: [
+          // Gradient Background
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.black, customDarkGrey],  
+                stops: [0.3, 0.3], 
+              ),
             ),
           ),
-        ),
-        _entryCompleted ? _buildCompletionScreen() : _buildEntryScreen(),
-      ],
+          _entryCompleted ? _buildCompletionScreen() : _buildEntryScreen(),
+        ],
+      ),
     ),
   );
 }
+
 
   Widget _buildEntryScreen() {
   return Padding(
