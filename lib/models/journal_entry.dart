@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'journal_entry.g.dart';
+part 'journal_entry.g.dart';  // Hive generates this file
 
 @HiveType(typeId: 0)
 class JournalEntry {
@@ -13,7 +13,10 @@ class JournalEntry {
   @HiveField(2)
   Mood mood;
 
-  JournalEntry(this.date, this.text, this.mood);
+  @HiveField(3)  // New field for the image path
+  String? imagePath;
+
+  JournalEntry(this.date, this.text, this.mood, this.imagePath);  // Updated constructor
 }
 
 @HiveType(typeId: 1)
@@ -31,4 +34,3 @@ enum Mood {
   @HiveField(5)
   Angry
 }
-

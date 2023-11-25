@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/journal_entry.dart';
@@ -27,6 +29,8 @@ class _HomePageState extends State<HomePage>  {
   final _journalController = TextEditingController();
   Mood? _selectedMood;
   bool _entryCompleted = false;
+
+   File? _imageFile; // For storing the picked image
   
 
   Weather? _currentWeather; // store current weather
@@ -137,6 +141,21 @@ Widget _weatherTemperature() {
   );
 }
 
+Future<void> _pickImage() async {
+  try {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  } catch (e) {
+    print('Error picking image: $e');
+    // Optionally, show an alert dialog with the error
+  }
+}
+
+
 
 @override
 Widget build(BuildContext context) {
@@ -185,94 +204,109 @@ Widget build(BuildContext context) {
 }
 
 
-  Widget _buildEntryScreen() {
+Widget _buildEntryScreen() {
   return Padding(
     padding: const EdgeInsets.all(16.0),
-    child: SingleChildScrollView( 
+    child: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            child: Column(
-              children: [
-                SizedBox(height: 5),
-                Text(
-                  "Today",
-                  style: TextStyle(
-                    fontFamily: 'YoungSerif',
-                    fontSize: 72,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      DateFormat('MMMM d, y').format(DateTime.now()),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    _weatherIcon(),
-                    SizedBox(width: 10),
-                    _weatherTemperature(),
-                  ],
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: _journalController,
-                  maxLines: 5,
-                  style: TextStyle(color: Colors.white,
-                  fontFamily: 'YoungSerif',
-                  ),
-                  decoration: InputDecoration(
-                    hintText: 'Tap to start journaling...',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    filled: true,
-                    fillColor: Colors.grey.shade800,
-                  ),
-                ),
-              ],
+          SizedBox(height: 5),
+          Text(
+            "Today",
+            style: TextStyle(
+              fontFamily: 'YoungSerif',
+              fontSize: 72,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                DateFormat('MMMM d, y').format(DateTime.now()),
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+              SizedBox(width: 10),
+              _weatherIcon(),
+              SizedBox(width: 10),
+              _weatherTemperature(),
+            ],
           ),
           SizedBox(height: 20),
+          TextField(
+            controller: _journalController,
+            maxLines: 5,
+            style: TextStyle(color: Colors.white, fontFamily: 'YoungSerif'),
+            decoration: InputDecoration(
+              hintText: 'Tap to start journaling...',
+              hintStyle: TextStyle(color: Colors.grey),
+              filled: true,
+              fillColor: Colors.grey.shade800,
+            ),
+          ),
+          SizedBox(height: 12), // Reduced spacing between the text field and button
+          Center( // Center the icon button
+            child: ElevatedButton(
+              onPressed: _pickImage,
+              style: ElevatedButton.styleFrom(
+                primary: _imageFile != null ? Colors.green : Colors.blue, // Change button color when an image is selected
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center, // Center the row horizontally
+                children: [
+                  Center( // Center the icon
+                    child: Icon(
+                      FontAwesomeIcons.image, // Replace with the desired icon
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(width: 8), // Add some spacing between the icon and text
+                  Text(
+                    _imageFile != null ? 'Image Selected' : 'Pick Image', // Change button text based on image selection
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 12), // Reduced spacing between the button and text
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 20.0),
+            padding: const EdgeInsets.only(left: 20.0, top: 12.0, bottom: 20.0), // Reduced top padding
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "How are you feeling?",
-                style: TextStyle(color: Colors.white, 
-                fontSize: 24,
-                fontFamily: 'Gabarito',
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'Gabarito'),
               ),
             ),
           ),
           GridView.builder(
-            shrinkWrap: true, 
-            physics: NeverScrollableScrollPhysics(), 
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               childAspectRatio: 1.0,
             ),
-            itemCount: 6,
+            itemCount: 6, // Assuming there are 6 moods
             itemBuilder: (context, index) {
-              // Map each index to a mood and associated icon/label for simplification
+              // Map each index to a mood and associated icon/label
               List<Mood> moods = [Mood.Happy, Mood.Neutral, Mood.Sad, Mood.Excited, Mood.Anxious, Mood.Angry];
               List<IconData> icons = [FontAwesomeIcons.smile, FontAwesomeIcons.meh, FontAwesomeIcons.frown, FontAwesomeIcons.grinStars, FontAwesomeIcons.sadTear, FontAwesomeIcons.angry];
               List<String> labels = ["Happy", "Neutral", "Sad", "Excited", "Anxious", "Angry"];
               return _buildMoodBox(moods[index], icons[index], labels[index]);
             },
           ),
-          SizedBox(height: 5), // Adjust this height if you want more/less space before the button
+          SizedBox(height: 5),
           ElevatedButton(
             onPressed: _saveJournal,
             child: Text("Submit"),
@@ -282,6 +316,8 @@ Widget build(BuildContext context) {
     ),
   );
 }
+
+
 
 
 Widget _buildMoodBox(Mood mood, IconData icon, String label) {
@@ -343,10 +379,11 @@ Widget _buildMoodBox(Mood mood, IconData icon, String label) {
 
   //save the journal entry to Hive
   final box = Hive.box<JournalEntry>('journalEntries');
-  final entry = JournalEntry(DateTime.now(), journalText, _selectedMood!);
+  final entry = JournalEntry(DateTime.now(), journalText, _selectedMood!, _imageFile?.path);
   box.add(entry);
 
   _journalController.clear(); // Clear the text field
+  _imageFile = null; // Clear the image file
 
   // Reset mood selection for the next entry
   _selectedMood = null;
