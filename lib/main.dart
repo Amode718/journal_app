@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Journal App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

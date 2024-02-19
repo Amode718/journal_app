@@ -5,7 +5,7 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to demonstrate image picker plugin</string>
+	<string>This app requires access to your photos for selecting and utilizing them in creating personalized content and enhancing your experience within the app.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
